@@ -1,4 +1,4 @@
-name: titanic-model
+name: retraining_project
 
 conda_env: conda.yaml
 
