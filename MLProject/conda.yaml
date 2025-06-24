@@ -6,5 +6,6 @@ dependencies:
   - pandas
   - scikit-learn
   - joblib
+  - pip
   - pip:
       - mlflow>=2.2.0
