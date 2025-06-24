@@ -29,7 +29,7 @@ jobs:
     - name: Run MLflow experiment
       run: |
         cd MLProject
-        mlflow run . -P n_estimators=100 --no-conda
+        mlflow run . -P n_estimators=100 
 
     - name: Commit and push MLflow artifacts
       run: |
