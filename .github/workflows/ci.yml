@@ -18,11 +18,13 @@ jobs:
       uses: conda-incubator/setup-miniconda@v2
       with:
         environment-file: MLProject/conda.yaml
-        activate-environment: titanic-env  # sesuai conda.yaml
+        activate-environment: titanic-env
         auto-activate-base: false
 
+    # *Bisa dihapus kalau mlflow sudah di conda.yaml,
+    # tapi untuk jaga-jaga kita install juga via pip*
     - name: Install MLflow CLI
-      run: pip install mlflow
+      run: pip install mlflow>=2.2.0
 
     - name: Run MLflow experiment
       run: |
@@ -34,7 +36,7 @@ jobs:
         git config user.name "github-actions"
         git config user.email "github-actions@github.com"
         git add MLProject/mlruns/
-        git commit -m "Add MLflow artifacts from CI"
+        git commit -m "Add MLflow artifacts from CI" || echo "No changes to commit"
         git push origin main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
