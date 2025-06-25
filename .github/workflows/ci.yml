@@ -36,11 +36,13 @@ jobs:
       - name: Commit and push MLflow artifacts
         shell: bash -l {0}
         run: |
-          mkdir -p MLProject/mlruns  # jaga-jaga jika folder belum ada
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          mkdir -p MLProject/mlruns
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+          # Ubah remote agar pakai GITHUB_TOKEN
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+
           git add MLProject/mlruns/
           git commit -m "Add MLflow artifacts from CI" || echo "No changes to commit"
           git push origin main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
