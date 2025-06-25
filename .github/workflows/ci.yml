@@ -11,32 +11,38 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Setup Miniconda
-      uses: conda-incubator/setup-miniconda@v2
-      with:
-        environment-file: MLProject/conda.yaml
-        activate-environment: titanic-env
-        auto-activate-base: false
+      - name: Setup Miniconda
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          environment-file: MLProject/conda.yaml
+          activate-environment: titanic-env
+          auto-activate-base: false
 
-    # *Bisa dihapus kalau mlflow sudah di conda.yaml,
-    # tapi untuk jaga-jaga kita install juga via pip*
-    - name: Install MLflow CLI
-      run: pip install mlflow>=2.2.0
+      - name: Install MLflow CLI (via pip)
+        shell: bash -l {0}
+        run: |
+          pip install --upgrade pip
+          pip install mlflow>=2.2.0
 
-    - name: Run MLflow experiment
-      run: |
-        cd MLProject
-        mlflow run . -P n_estimators=100 
+      - name: Run MLflow experiment
+        shell: bash -l {0}
+        run: |
+          cd MLProject
+          source ~/miniconda/etc/profile.d/conda.sh
+          conda activate titanic-env
+          mlflow run . -P n_estimators=100 --env-manager=local
 
-    - name: Commit and push MLflow artifacts
-      run: |
-        git config user.name "github-actions"
-        git config user.email "github-actions@github.com"
-        git add MLProject/mlruns/
-        git commit -m "Add MLflow artifacts from CI" || echo "No changes to commit"
-        git push origin main
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit and push MLflow artifacts
+        shell: bash -l {0}
+        run: |
+          mkdir -p MLProject/mlruns  # just in case
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add MLProject/mlruns/
+          git commit -m "Add MLflow artifacts from CI" || echo "No changes to commit"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
