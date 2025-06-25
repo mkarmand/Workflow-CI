@@ -31,14 +31,12 @@ jobs:
         shell: bash -l {0}
         run: |
           cd MLProject
-          source ~/miniconda/etc/profile.d/conda.sh
-          conda activate titanic-env
           mlflow run . -P n_estimators=100 --env-manager=local
 
       - name: Commit and push MLflow artifacts
         shell: bash -l {0}
         run: |
-          mkdir -p MLProject/mlruns  # just in case
+          mkdir -p MLProject/mlruns  # jaga-jaga jika folder belum ada
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add MLProject/mlruns/
