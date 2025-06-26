@@ -21,11 +21,11 @@ jobs:
           activate-environment: titanic-env
           auto-activate-base: false
 
-      - name: Install MLflow CLI (via pip)
+      - name: Install MLflow and Docker SDK
         shell: bash -l {0}
         run: |
           pip install --upgrade pip
-          pip install mlflow>=2.2.0
+          pip install mlflow>=2.2.0 docker
 
       - name: Run MLflow experiment
         shell: bash -l {0}
@@ -40,9 +40,21 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
 
-          # Ubah remote agar pakai GITHUB_TOKEN
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-
           git add MLProject/mlruns/
           git commit -m "Add MLflow artifacts from CI" || echo "No changes to commit"
           git push origin main
+
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Build Docker image from trained model
+        shell: bash -l {0}
+        run: |
+          cd MLProject
+          export RUN_ID=$(ls -t mlruns/0 | head -n1)
+          echo "Latest RUN_ID: $RUN_ID"
+          mlflow build-docker -m mlruns/0/$RUN_ID/artifacts/model -n mkarmand/mlflow-model:latest
+
+      - name: Push Docker image to Docker Hub
+        run: docker push mkarmand/mlflow-model:latest
