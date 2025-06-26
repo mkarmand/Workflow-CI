@@ -1,0 +1,29 @@
+artifact_path: file:///home/runner/work/Workflow-CI/Workflow-CI/MLProject/mlruns/0/models/m-843b0bd1e5b14ed59ca0e15ee10acc9a/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.9.23
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.6.1
+is_signature_from_type_hint: false
+mlflow_version: 3.1.1
+model_id: m-843b0bd1e5b14ed59ca0e15ee10acc9a
+model_size_bytes: 47571
+model_uuid: m-843b0bd1e5b14ed59ca0e15ee10acc9a
+prompts: null
+run_id: 9a4a694e4af2478faab932fa17e1cc62
+signature:
+  inputs: '[{"type": "long", "name": "Feature1", "required": true}, {"type": "long",
+    "name": "Feature2", "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-06-26 17:01:30.663754'

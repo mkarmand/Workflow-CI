@@ -1,0 +1,14 @@
+artifact_uri: file:///home/runner/work/Workflow-CI/Workflow-CI/MLProject/mlruns/0/9a4a694e4af2478faab932fa17e1cc62/artifacts
+end_time: 1750957295756
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 9a4a694e4af2478faab932fa17e1cc62
+run_name: incongruous-koi-508
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750957289244
+status: 3
+tags: []
+user_id: runner
