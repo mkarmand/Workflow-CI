@@ -31,7 +31,7 @@ jobs:
         shell: bash -l {0}
         run: |
           cd MLProject
-          mlflow run . -P n_estimators=100 --env-manager=local
+          mlflow run . -P n_estimators=100 -P data_path=train_preprocessing.csv --env-manager=local
 
       - name: Commit and push MLflow artifacts
         shell: bash -l {0}
