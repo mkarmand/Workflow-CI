@@ -1,0 +1,14 @@
+artifact_uri: file:///home/runner/work/Workflow-CI/Workflow-CI/MLProject/mlruns/0/f77779158d074041a8a88edee7487201/artifacts
+end_time: 1750956226273
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: f77779158d074041a8a88edee7487201
+run_name: serious-croc-281
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750956221788
+status: 3
+tags: []
+user_id: runner
