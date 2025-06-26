@@ -1,0 +1,14 @@
+artifact_uri: file:///home/runner/work/Workflow-CI/Workflow-CI/MLProject/mlruns/0/b8f3c3ebd79e45b3bd8bb600f0e30b9a/artifacts
+end_time: 1750915903747
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: b8f3c3ebd79e45b3bd8bb600f0e30b9a
+run_name: victorious-fowl-81
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1750915898540
+status: 3
+tags: []
+user_id: runner
