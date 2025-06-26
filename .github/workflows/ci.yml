@@ -21,11 +21,11 @@ jobs:
           activate-environment: titanic-env
           auto-activate-base: false
 
-      - name: Install MLflow and Docker SDK
+      - name: Install MLflow (>=2.11.0) and Docker SDK
         shell: bash -l {0}
         run: |
           pip install --upgrade pip
-          pip install mlflow>=2.2.0 docker
+          pip install mlflow>=2.11.0 docker
 
       - name: Run MLflow experiment
         shell: bash -l {0}
@@ -39,7 +39,6 @@ jobs:
           mkdir -p MLProject/mlruns
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git add MLProject/mlruns/
           git commit -m "Add MLflow artifacts from CI" || echo "No changes to commit"
