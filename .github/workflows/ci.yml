@@ -53,7 +53,7 @@ jobs:
           cd MLProject
           export RUN_ID=$(ls -t mlruns/0 | head -n1)
           echo "Latest RUN_ID: $RUN_ID"
-          mlflow build-docker -m mlruns/0/$RUN_ID/artifacts/model -n mkarmand/mlflow-model:latest
+          mlflow models build-docker -m mlruns/0/$RUN_ID/artifacts/model -n mkarmand/mlflow-model:latest
 
       - name: Push Docker image to Docker Hub
         run: docker push mkarmand/mlflow-model:latest
