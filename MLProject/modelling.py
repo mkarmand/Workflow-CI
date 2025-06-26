@@ -11,7 +11,7 @@ import mlflow.sklearn
 def main(n_estimators: int):
     mlflow.sklearn.autolog()
 
-    data_path = os.path.join(os.path.dirname(__file__), 'namadataset_preprocessing', 'train.csv')
+    data_path = os.path.join(os.path.dirname(__file__), 'train_preprocessing.csv')
     df = pd.read_csv(data_path)
 
     X = df.drop('Survived', axis=1)
