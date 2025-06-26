@@ -8,10 +8,13 @@ import joblib
 import mlflow
 import mlflow.sklearn
 
-def main(n_estimators: int):
+def main(n_estimators: int, data_path: str):
     mlflow.sklearn.autolog()
 
-    data_path = os.path.join(os.path.dirname(__file__), 'train_preprocessing.csv')
+    # Gunakan data_path yang diterima argumen, jika relatif, buat path absolut berdasarkan file ini
+    if not os.path.isabs(data_path):
+        data_path = os.path.join(os.path.dirname(__file__), data_path)
+
     df = pd.read_csv(data_path)
 
     X = df.drop('Survived', axis=1)
@@ -35,6 +38,7 @@ def main(n_estimators: int):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--n_estimators", type=int, default=100)
+    parser.add_argument("--data_path", type=str, default="train_preprocessing.csv")  # Tambahan argumen
     args = parser.parse_args()
 
-    main(args.n_estimators)
+    main(args.n_estimators, args.data_path)
