@@ -21,11 +21,11 @@ jobs:
           activate-environment: titanic-env
           auto-activate-base: false
 
-      - name: Install MLflow (>=2.11.0) and Docker SDK
+      - name: Install MLflow (>=2.19.0) and Docker SDK
         shell: bash -l {0}
         run: |
           pip install --upgrade pip
-          pip install mlflow>=2.11.0 docker
+          pip install mlflow>=2.19.0 docker
 
       - name: Run MLflow experiment
         shell: bash -l {0}
