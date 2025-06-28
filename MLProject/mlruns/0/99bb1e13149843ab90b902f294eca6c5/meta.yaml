@@ -1,0 +1,15 @@
+artifact_uri: file:///home/runner/work/Workflow-CI/Workflow-CI/mlruns/0/99bb1e13149843ab90b902f294eca6c5/artifacts
+end_time: 1751106550773
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 99bb1e13149843ab90b902f294eca6c5
+run_name: rumbling-snake-739
+run_uuid: 99bb1e13149843ab90b902f294eca6c5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751106515622
+status: 3
+tags: []
+user_id: runner
