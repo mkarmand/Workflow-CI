@@ -32,11 +32,16 @@ jobs:
         run: |
           cd MLProject
           mlflow run . -P n_estimators=100 -P data_path=train_preprocessing.csv --env-manager=local
+          # After running the MLflow experiment, get the latest run ID
+          # This command lists directories in mlruns/0, sorts by time, and extracts the basename (the run ID)
+          export LATEST_RUN_ID=$(ls -td mlruns/0/*/ | head -n1 | xargs basename)
+          echo "::set-output name=run_id::$LATEST_RUN_ID"
+        id: run_mlflow_experiment # Add an ID to reference outputs
 
       - name: Commit and push MLflow artifacts
         shell: bash -l {0}
         run: |
-          mkdir -p MLProject/mlruns
+          mkdir -p MLProject/mlruns # Ensure the directory exists
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
@@ -51,7 +56,8 @@ jobs:
         shell: bash -l {0}
         run: |
           cd MLProject
-          export RUN_ID=$(ls -t mlruns/0 | head -n1)
+          # Use the output from the previous step to get the correct RUN_ID
+          export RUN_ID="${{ steps.run_mlflow_experiment.outputs.run_id }}"
           echo "Latest RUN_ID: $RUN_ID"
           mlflow models build-docker -m mlruns/0/$RUN_ID/artifacts/model -n mkarmand/mlflow-model:latest
 
