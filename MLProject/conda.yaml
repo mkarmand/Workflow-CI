@@ -10,6 +10,6 @@ dependencies:
   - pip
   - pip:
       - mlflow==2.19.0
-      - scipy==1.15.3
+      - scipy==1.10.1
       - cloudpickle==3.1.1
       - docker
