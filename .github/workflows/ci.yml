@@ -1,4 +1,4 @@
-name: MLflow Experiment CI
+name: CI Eksperimen MLflow # Nama alur kerja
 
 on:
   push:
@@ -11,37 +11,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repositori # Langkah untuk meng-checkout kode dari repositori
         uses: actions/checkout@v3
 
-      - name: Setup Miniconda
+      - name: Siapkan Miniconda # Langkah untuk menyiapkan lingkungan Miniconda
         uses: conda-incubator/setup-miniconda@v2
         with:
           environment-file: MLProject/conda.yaml
           activate-environment: titanic-env
           auto-activate-base: false
 
-      - name: Install MLflow (>=2.19.0) and Docker SDK
+      - name: Instal MLflow (>=2.19.0) dan Docker SDK # Langkah untuk menginstal dependensi Python
         shell: bash -l {0}
         run: |
           pip install --upgrade pip
           pip install mlflow>=2.19.0 docker
 
-      - name: Run MLflow experiment
+      - name: Jalankan eksperimen MLflow # Langkah untuk menjalankan eksperimen MLflow dan mendapatkan ID run terbaru
         shell: bash -l {0}
         run: |
           cd MLProject
           mlflow run . -P n_estimators=100 -P data_path=train_preprocessing.csv --env-manager=local
-          # After running the MLflow experiment, get the latest run ID
-          # This command lists directories in mlruns/0, sorts by time, and extracts the basename (the run ID)
+          # Setelah menjalankan eksperimen MLflow, dapatkan ID run terbaru
+          # Perintah ini mencantumkan direktori di mlruns/0/, mengurutkan berdasarkan waktu, dan mengekstrak nama dasar (ID run)
           export LATEST_RUN_ID=$(ls -td mlruns/0/*/ | head -n1 | xargs basename)
-          echo "::set-output name=run_id::$LATEST_RUN_ID"
-        id: run_mlflow_experiment # Add an ID to reference outputs
+          echo "run_id=$LATEST_RUN_ID" >> $GITHUB_OUTPUT # Diperbarui untuk menggunakan file lingkungan GITHUB_OUTPUT
+        id: run_mlflow_experiment # Tambahkan ID untuk mereferensikan output
 
-      - name: Commit and push MLflow artifacts
+      - name: Commit dan push artefak MLflow # Langkah untuk melakukan commit dan push artefak MLflow
         shell: bash -l {0}
         run: |
-          mkdir -p MLProject/mlruns # Ensure the directory exists
+          mkdir -p MLProject/mlruns # Pastikan direktori ada
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
@@ -49,17 +49,17 @@ jobs:
           git commit -m "Add MLflow artifacts from CI" || echo "No changes to commit"
           git push origin main
 
-      - name: Login to Docker Hub
+      - name: Login ke Docker Hub # Langkah untuk login ke Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      - name: Build Docker image from trained model
+      - name: Bangun citra Docker dari model yang telah dilatih # Langkah untuk membangun citra Docker dari model yang dilatih
         shell: bash -l {0}
         run: |
           cd MLProject
-          # Use the output from the previous step to get the correct RUN_ID
+          # Gunakan output dari langkah sebelumnya untuk mendapatkan RUN_ID yang benar
           export RUN_ID="${{ steps.run_mlflow_experiment.outputs.run_id }}"
           echo "Latest RUN_ID: $RUN_ID"
           mlflow models build-docker -m mlruns/0/$RUN_ID/artifacts/model -n mkarmand/mlflow-model:latest
 
-      - name: Push Docker image to Docker Hub
+      - name: Push citra Docker ke Docker Hub # Langkah untuk melakukan push citra Docker ke Docker Hub
         run: docker push mkarmand/mlflow-model:latest
