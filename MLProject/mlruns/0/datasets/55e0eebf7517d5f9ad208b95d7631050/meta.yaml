@@ -7,5 +7,5 @@ schema: '{"mlflow_colspec": [{"type": "long", "name": "Pclass", "required": true
   "long", "name": "Parch", "required": true}, {"type": "double", "name": "Fare", "required":
   true}, {"type": "long", "name": "Embarked", "required": true}]}'
 source: '{"tags": {"mlflow.user": "runner", "mlflow.source.name": "modelling.py",
-  "mlflow.source.type": "LOCAL", "mlflow.source.git.commit": "e2a16dcde16ac55c7d0c2c8c79b92e3130670919"}}'
+  "mlflow.source.type": "LOCAL", "mlflow.source.git.commit": "22d77f501f9fb9167bc9313a71f302784e438b53"}}'
 source_type: code

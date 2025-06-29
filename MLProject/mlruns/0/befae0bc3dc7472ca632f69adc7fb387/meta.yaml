@@ -1,0 +1,15 @@
+artifact_uri: file:///home/runner/work/Workflow-CI/Workflow-CI/mlruns/0/befae0bc3dc7472ca632f69adc7fb387/artifacts
+end_time: 1751184845290
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: befae0bc3dc7472ca632f69adc7fb387
+run_name: indecisive-deer-128
+run_uuid: befae0bc3dc7472ca632f69adc7fb387
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751184808623
+status: 3
+tags: []
+user_id: runner
